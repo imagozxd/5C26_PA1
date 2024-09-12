@@ -6,6 +6,7 @@ public class TouchController : MonoBehaviour
 {
     private Transform currenctPosition;
     private Transform newPosition;
+    [SerializeField] private int value = 1;
     void Update()
     {
         if (Input.touchCount > 0)
@@ -13,18 +14,19 @@ public class TouchController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
             Debug.Log(touchPosition);
-
-            if (touchPosition.y > 0)
+            if (touch.phase == TouchPhase.Began)
             {
-                newPosition = currenctPosition.position.y +1f;
-                Debug.Log("up");
+                if (touchPosition.y > 0)
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y + value);
+                    Debug.Log("up");
+
+                }
+                else
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y - value);
+                }
             }
-            else
-            {
-
-            }
-
-
         }
     }
 }
